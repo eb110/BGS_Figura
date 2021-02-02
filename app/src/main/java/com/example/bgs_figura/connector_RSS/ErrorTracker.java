@@ -1,4 +1,4 @@
-package com.example.bgs_figura.Connector_RSS;
+package com.example.bgs_figura.connector_RSS;
 
 public class ErrorTracker {
     public final static String WRONG_URL_FORMAT="Error : Wrong URL Format";

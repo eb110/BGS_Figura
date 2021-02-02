@@ -1,4 +1,4 @@
-package com.example.bgs_figura.Connector_RSS;
+package com.example.bgs_figura.connector_RSS;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
