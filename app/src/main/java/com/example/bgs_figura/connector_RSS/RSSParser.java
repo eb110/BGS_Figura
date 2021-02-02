@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.bgs_figura.data.Earthquake;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -23,6 +25,8 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
 
     ProgressDialog pd;
     ArrayList<String> headlines = new ArrayList<>();
+
+    ArrayList<Earthquake> earthquakes = new ArrayList<>();
 
     public RSSParser(Context c, InputStream is, ListView lv) {
         this.c = c;
@@ -51,7 +55,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
 
         if(isParsed){
             //bind
-
+            FillArray();
             lv.setAdapter(new ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, headlines));
 
         }else{
@@ -70,10 +74,9 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
             //Set stream
             parser.setInput(is, null);
             headlines.clear();
-
+            Earthquake earthquake = new Earthquake();
             String headline = null;
-            Boolean isWebsiteTitle = true;
-
+            int flag = 0;
             int event = parser.getEventType();
 
             do {
@@ -82,6 +85,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
                 switch (event) {
 
                     case XmlPullParser.START_TAG:
+                        if(name.equals("item")) earthquake = new Earthquake();
                         break;
 
                     case XmlPullParser.TEXT:
@@ -89,10 +93,18 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if(isWebsiteTitle){
-                            isWebsiteTitle = false;
-                        }else if(name.equals("title")){
-                            headlines.add(headline);
+                        if(name.equals("item")) {
+                            earthquakes.add(earthquake);
+                        }
+                        else if(name.equals("geo:long")) earthquake.setLongitude(Double.parseDouble(headline));
+                        else if(name.equals("geo:lat")) earthquake.setLatitude(Double.parseDouble(headline));
+                        else if(name.equals("pubDate")) earthquake.setDate(headline);
+                        else if(name.equals("link")) earthquake.setUrl(headline);
+                        else if(name.equals("description") && flag++ != 0){
+                            String[] temp = headline.split(";");
+                            earthquake.setLocation(temp[1].substring(temp[1].indexOf(":") + 1));
+                            earthquake.setMagnitude(Double.parseDouble(temp[4].substring(temp[4].indexOf(":") + 2)));
+                            earthquake.setDepth(Integer.parseInt(temp[3].replaceAll("\\D+", "")));
                         }
                         break;
                 }
@@ -109,6 +121,18 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
         }
 
         return false;
+
+    }
+
+    private void FillArray(){
+        int l = earthquakes.size();
+        for(int i = 0; i < l; i++){
+            Earthquake ele = earthquakes.get(i);
+            headlines.add(ele.getDate());
+            headlines.add(ele.getLocation());
+            headlines.add(ele.getUrl());
+            headlines.add("next kolo");
+        }
 
     }
 }
