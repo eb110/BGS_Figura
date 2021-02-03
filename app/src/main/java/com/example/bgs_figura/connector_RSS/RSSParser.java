@@ -3,11 +3,11 @@ package com.example.bgs_figura.connector_RSS;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bgs_figura.data.Earthquake;
+import com.example.bgs_figura.list_manipulation.ListCreator;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -24,7 +24,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
     ListView lv;
 
     ProgressDialog pd;
-    ArrayList<String> headlines = new ArrayList<>();
+   // ArrayList<String> headlines = new ArrayList<>();
 
     ArrayList<Earthquake> earthquakes = new ArrayList<>();
 
@@ -55,9 +55,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
 
         if(isParsed){
             //bind
-            FillArray();
-            lv.setAdapter(new ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, headlines));
-
+            new ListCreator(c, earthquakes, lv).execute();
         }else{
 
             Toast.makeText(c, "Unable To Parse", Toast.LENGTH_SHORT).show();
@@ -73,7 +71,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
 
             //Set stream
             parser.setInput(is, null);
-            headlines.clear();
+         //   headlines.clear();
             Earthquake earthquake = new Earthquake();
             String headline = null;
             int flag = 0;
@@ -123,16 +121,15 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
         return false;
 
     }
-
+/*
     private void FillArray(){
         int l = earthquakes.size();
         for(int i = 0; i < l; i++){
             Earthquake ele = earthquakes.get(i);
-            headlines.add(ele.getDate());
+         //   headlines.add(ele.getDate());
             headlines.add(ele.getLocation());
-            headlines.add(ele.getUrl());
-            headlines.add("next kolo");
+          //  headlines.add(ele.getUrl());
+           // headlines.add("next kolo");
         }
-
-    }
+    }*/
 }

@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 new Downloader(MainActivity.this, urlAddress, lv).execute();
-
             }
         });
 

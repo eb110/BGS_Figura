@@ -17,6 +17,7 @@ public class Downloader extends AsyncTask<Void, Void, Object> {
     String urlAddress;
     ListView lv;
 
+
     ProgressDialog pd;
 
     public Downloader(Context c, String urlAddress, ListView lv) {
