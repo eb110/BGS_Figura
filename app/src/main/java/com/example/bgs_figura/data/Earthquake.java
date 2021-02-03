@@ -1,6 +1,8 @@
 package com.example.bgs_figura.data;
 
-public class Earthquake {
+import java.io.Serializable;
+
+public class Earthquake implements Serializable {
     private String location;
     private double longitude;
     private double latitude;
