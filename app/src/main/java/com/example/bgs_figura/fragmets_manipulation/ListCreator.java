@@ -1,4 +1,4 @@
-package com.example.bgs_figura.list_manipulation;
+package com.example.bgs_figura.fragmets_manipulation;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bgs_figura.BGS_Event_Figura;
+import com.example.bgs_figura.MapsFragment;
 import com.example.bgs_figura.data.Earthquake;
 
 import java.util.ArrayList;
@@ -24,13 +25,15 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
     Earthquake quake = new Earthquake();
 
     ArrayList<String> headlines = new ArrayList<>();
+    MapsFragment mf;
 
     ProgressDialog pd;
 
-    public ListCreator(Context c, ArrayList<Earthquake> earthquakes, ListView lv) {
+    public ListCreator(Context c, ArrayList<Earthquake> earthquakes, ListView lv, MapsFragment mf) {
         this.c = c;
         this.earthquakes = earthquakes;
         this.lv = lv;
+        this.mf = mf;
     }
 
     @Override
@@ -64,11 +67,12 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean check) {
         super.onPostExecute(check);
-
+        pd.dismiss();
 
         if(check){
             //bind
-            pd.dismiss();
+            MapCreator mc = new MapCreator(c, mf, earthquakes);
+            mc.execute();
             lv.setAdapter(new ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, headlines));
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

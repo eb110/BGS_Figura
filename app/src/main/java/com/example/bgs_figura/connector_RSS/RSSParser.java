@@ -6,8 +6,9 @@ import android.os.AsyncTask;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.bgs_figura.MapsFragment;
 import com.example.bgs_figura.data.Earthquake;
-import com.example.bgs_figura.list_manipulation.ListCreator;
+import com.example.bgs_figura.fragmets_manipulation.ListCreator;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -22,16 +23,18 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
     Context c;
     InputStream is;
     ListView lv;
+    MapsFragment mf;
 
     ProgressDialog pd;
    // ArrayList<String> headlines = new ArrayList<>();
 
     ArrayList<Earthquake> earthquakes = new ArrayList<>();
 
-    public RSSParser(Context c, InputStream is, ListView lv) {
+    public RSSParser(Context c, InputStream is, ListView lv, MapsFragment mf) {
         this.c = c;
         this.is = is;
         this.lv = lv;
+        this.mf = mf;
     }
 
     @Override
@@ -55,7 +58,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
 
         if(isParsed){
             //bind
-            new ListCreator(c, earthquakes, lv).execute();
+            new ListCreator(c, earthquakes, lv, mf).execute();
         }else{
 
             Toast.makeText(c, "Unable To Parse", Toast.LENGTH_SHORT).show();

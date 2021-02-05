@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.bgs_figura.data.Earthquake;
-import com.google.android.gms.maps.GoogleMap;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BGS_Event_Figura extends AppCompatActivity {
 
@@ -17,7 +21,7 @@ public class BGS_Event_Figura extends AppCompatActivity {
     TextView tv_latlong;
     Earthquake quake = new Earthquake();
 
-    private GoogleMap mMap;
+    private MapsFragment mapsFragment;
 
     public void setQuake (Earthquake quake){
 
@@ -40,6 +44,12 @@ public class BGS_Event_Figura extends AppCompatActivity {
         tv_magnitude.setText("Magnitude: " + quake.getMagnitude() + " Richter Scale");
         tv_depth.setText(("Depth: " + quake.getDepth() + " km"));
         tv_latlong.setText(("Latitude: " + quake.getLatitude() + " Longitude: " +quake.getLongitude()));
+
+        mapsFragment = new MapsFragment(new ArrayList<>(Arrays.asList(quake)), 7);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_maps, mapsFragment);
+        transaction.commit();
 
     }
 
