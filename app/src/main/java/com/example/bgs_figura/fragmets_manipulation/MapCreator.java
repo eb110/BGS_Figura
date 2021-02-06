@@ -21,11 +21,6 @@ public class MapCreator {
 
     public void execute(){
 
-        //Earthquake quake = new Earthquake();
-       // quake.setLatitude(52.368);
-       // quake.setLongitude(0.426);
-      //  quake.setLocation("ciemna dupa");
-      //  new ArrayList<>(Arrays.asList(quake))
         MapsFragment mf = new MapsFragment(earthquakes, 6);
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment_maps2, mf);
