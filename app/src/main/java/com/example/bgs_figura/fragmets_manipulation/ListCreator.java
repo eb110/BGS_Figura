@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.bgs_figura.BGS_Event_Figura;
-import com.example.bgs_figura.MapsFragment;
 import com.example.bgs_figura.data.Earthquake;
 
 import java.util.ArrayList;
@@ -25,15 +24,13 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
     Earthquake quake = new Earthquake();
 
     ArrayList<String> headlines = new ArrayList<>();
-    MapsFragment mf;
 
     ProgressDialog pd;
 
-    public ListCreator(Context c, ArrayList<Earthquake> earthquakes, ListView lv, MapsFragment mf) {
+    public ListCreator(Context c, ArrayList<Earthquake> earthquakes, ListView lv) {
         this.c = c;
         this.earthquakes = earthquakes;
         this.lv = lv;
-        this.mf = mf;
     }
 
     @Override
@@ -51,6 +48,7 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
     }
 
     private Boolean generateList(){
+
         int l = earthquakes.size();
         for(int i = 0; i < l; i++){
             Earthquake ele = earthquakes.get(i);
@@ -59,7 +57,6 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
             //  headlines.add(ele.getUrl());
             // headlines.add("next kolo");
         }
-
 
         return true;
     }
@@ -71,8 +68,7 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
 
         if(check){
             //bind
-            MapCreator mc = new MapCreator(c, mf, earthquakes);
-            mc.execute();
+
             lv.setAdapter(new ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, headlines));
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

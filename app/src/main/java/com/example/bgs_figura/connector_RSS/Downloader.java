@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.bgs_figura.MapsFragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -18,16 +18,15 @@ public class Downloader extends AsyncTask<Void, Void, Object> {
     Context c;
     String urlAddress;
     ListView lv;
-    MapsFragment mf;
-
+    FragmentManager manager;
 
     ProgressDialog pd;
 
-    public Downloader(Context c, String urlAddress, ListView lv, MapsFragment mf) {
+    public Downloader(FragmentManager manager, Context c, String urlAddress, ListView lv) {
         this.c = c;
         this.urlAddress = urlAddress;
         this.lv = lv;
-        this.mf = mf;
+        this.manager = manager;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class Downloader extends AsyncTask<Void, Void, Object> {
             Toast.makeText(c, data.toString(), Toast.LENGTH_SHORT).show();
         }else{
             //
-            new RSSParser(c, (InputStream) data, lv, mf).execute();
+            new RSSParser(manager, c, (InputStream) data, lv).execute();
         }
     }
 

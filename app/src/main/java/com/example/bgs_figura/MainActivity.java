@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.bgs_figura.connector_RSS.Downloader;
 import com.example.bgs_figura.data.Earthquake;
@@ -13,7 +14,6 @@ import com.example.bgs_figura.data.Earthquake;
 public class MainActivity extends AppCompatActivity {
 
     final static String urlAddress = "http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
-    private MapsFragment mf;
     Earthquake quake = new Earthquake();
 
 
@@ -32,16 +32,26 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int a = R.id.fragment_maps2;
 
-                new Downloader(MainActivity.this, urlAddress, lv, mf).execute();
+                FragmentManager manager = getSupportFragmentManager();
 
-                // czekam sobie na downloader az skonczy
+              //  MapCreator mc = new MapCreator(manager,null);
+             //   mc.execute();
 
-           //     mf = new MapsFragment(new ArrayList<>(Arrays.asList(quake)), 7);
-           //     FragmentManager manager = getSupportFragmentManager();
-          //      FragmentTransaction transaction = manager.beginTransaction();
-           //     transaction.replace(R.id.fragment_maps2, mf);
-           //     transaction.commit();
+
+                 new Downloader(manager,MainActivity.this, urlAddress, lv).execute();
+
+                 /*
+                Earthquake quake = new Earthquake();
+                quake.setLatitude(52.368);
+                quake.setLongitude(0.426);
+                quake.setLocation("ciemna dupa");
+                MapsFragment mf = new MapsFragment(new ArrayList<>(Arrays.asList(quake)), 7);
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.fragment_maps2, mf);
+               transaction.commit();*/
             }
         });
 
