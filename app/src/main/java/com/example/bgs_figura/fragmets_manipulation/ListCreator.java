@@ -83,6 +83,7 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
 
         if(check){
 
+
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(c,
                     android.R.layout.simple_list_item_1, headlines) {
                 @Override
@@ -92,15 +93,12 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
                         if(quake.getMagnitude() >= 3.0)view.setBackgroundColor(Color.RED);
                         else if(quake.getMagnitude() >= 2.0)view.setBackgroundColor(Color.MAGENTA);
                         else if(quake.getMagnitude() >= 1.0)view.setBackgroundColor(Color.YELLOW);
-                        else view.setBackgroundColor(Color.WHITE);
+                        else view.setBackgroundColor(Color.GREEN);
                     return view;
                 }
             };
 
             lv.setAdapter(arrayAdapter);
-
-
-
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int i, long id) {

@@ -3,6 +3,7 @@ package com.example.bgs_figura.connector_RSS;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,17 +17,18 @@ import java.net.HttpURLConnection;
 public class Downloader extends AsyncTask<Void, Void, Object> {
 
     Context c;
-    String urlAddress;
+    String urlAddress = "http://quakes.bgs.ac.uk/feeds/MhSeismology.xml";
     ListView lv;
     FragmentManager manager;
+    Button btn;
 
     ProgressDialog pd;
 
-    public Downloader(FragmentManager manager, Context c, String urlAddress, ListView lv) {
+    public Downloader(FragmentManager manager, Context c, ListView lv, Button btn) {
         this.c = c;
-        this.urlAddress = urlAddress;
         this.lv = lv;
         this.manager = manager;
+        this.btn = btn;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class Downloader extends AsyncTask<Void, Void, Object> {
             Toast.makeText(c, data.toString(), Toast.LENGTH_SHORT).show();
         }else{
             //
-            new RSSParser(manager, c, (InputStream) data, lv).execute();
+            new RSSParser(manager, c, (InputStream) data, lv, btn).execute();
         }
     }
 

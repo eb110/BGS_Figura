@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -38,8 +39,35 @@ public class MapsFragment extends Fragment {
             LatLng landMark = new LatLng(0,0);
             for(int i = 0; i < l; i++) {
                 Earthquake quake = earthquakes.get(i);
+
                 landMark = new LatLng(quake.getLatitude(), quake.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(landMark).title(quake.getLocation()));
+
+                if(quake.getMagnitude() >= 3.0) {
+                    mMap.addMarker(new MarkerOptions()
+                            .position(landMark)
+                            .title(quake.getLocation())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                }
+                else if(quake.getMagnitude() >= 2.0) {
+                    mMap.addMarker(new MarkerOptions()
+                            .position(landMark)
+                            .title(quake.getLocation())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                }
+                else if(quake.getMagnitude() >= 1.0) {
+                    mMap.addMarker(new MarkerOptions()
+                            .position(landMark)
+                            .title(quake.getLocation())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                }
+                else {
+                    mMap.addMarker(new MarkerOptions()
+                            .position(landMark)
+                            .title(quake.getLocation())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                }
+
+               // mMap.addMarker(new MarkerOptions().position(landMark).icon().title(quake.getLocation()));
             }
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(landMark,scale));
         }

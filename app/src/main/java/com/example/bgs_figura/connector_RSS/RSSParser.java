@@ -2,12 +2,16 @@ package com.example.bgs_figura.connector_RSS;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
+import com.example.bgs_figura.SearchingActivity;
 import com.example.bgs_figura.data.Earthquake;
 import com.example.bgs_figura.fragmets_manipulation.ListCreator;
 import com.example.bgs_figura.fragmets_manipulation.MapCreator;
@@ -25,18 +29,20 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
     Context c;
     InputStream is;
     ListView lv;
+    Button btn;
     FragmentManager manager;
 
     ProgressDialog pd;
-   // ArrayList<String> headlines = new ArrayList<>();
+    // ArrayList<String> headlines = new ArrayList<>();
 
     ArrayList<Earthquake> earthquakes = new ArrayList<>();
 
-    public RSSParser(FragmentManager manager, Context c, InputStream is, ListView lv) {
+    public RSSParser(FragmentManager manager, Context c, InputStream is, ListView lv, Button btn) {
         this.c = c;
         this.is = is;
         this.lv = lv;
         this.manager = manager;
+        this.btn = btn;
     }
 
     @Override
@@ -58,13 +64,23 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
         super.onPostExecute(isParsed);
         pd.dismiss();
 
-        if(isParsed){
-        //    System.out.println('\n' + earthquakes.size() + '\n');
-              MapCreator mc = new MapCreator(manager, earthquakes);
-              mc.execute();
+        if (isParsed) {
+            MapCreator mc = new MapCreator(manager, earthquakes);
+            mc.execute();
             //bind
             new ListCreator(c, earthquakes, lv).execute();
-        }else{
+
+            btn.setVisibility(View.VISIBLE);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    openActivity(earthquakes);
+
+                }
+            });
+
+        } else {
 
             Toast.makeText(c, "Unable To Parse", Toast.LENGTH_SHORT).show();
 
@@ -79,7 +95,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
 
             //Set stream
             parser.setInput(is, null);
-         //   headlines.clear();
+            //   headlines.clear();
             Earthquake earthquake = new Earthquake();
             String headline = null;
             int flag = 0;
@@ -91,7 +107,7 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
                 switch (event) {
 
                     case XmlPullParser.START_TAG:
-                        if(name.equals("item")) earthquake = new Earthquake();
+                        if (name.equals("item")) earthquake = new Earthquake();
                         break;
 
                     case XmlPullParser.TEXT:
@@ -99,14 +115,15 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if(name.equals("item")) {
+                        if (name.equals("item")) {
                             earthquakes.add(earthquake);
-                        }
-                        else if(name.equals("geo:long")) earthquake.setLongitude(Double.parseDouble(headline));
-                        else if(name.equals("geo:lat")) earthquake.setLatitude(Double.parseDouble(headline));
-                        else if(name.equals("pubDate")) earthquake.setDate(headline);
-                        else if(name.equals("link")) earthquake.setUrl(headline);
-                        else if(name.equals("description") && flag++ != 0){
+                        } else if (name.equals("geo:long"))
+                            earthquake.setLongitude(Double.parseDouble(headline));
+                        else if (name.equals("geo:lat"))
+                            earthquake.setLatitude(Double.parseDouble(headline));
+                        else if (name.equals("pubDate")) earthquake.setDate(headline);
+                        else if (name.equals("link")) earthquake.setUrl(headline);
+                        else if (name.equals("description") && flag++ != 0) {
                             String[] temp = headline.split(";");
                             earthquake.setLocation(temp[1].substring(temp[1].indexOf(":") + 1));
                             earthquake.setMagnitude(Double.parseDouble(temp[4].substring(temp[4].indexOf(":") + 2)));
@@ -118,7 +135,6 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
 
             } while (event != XmlPullParser.END_DOCUMENT);
 
-            System.out.println(earthquakes.size());
             return true;
 
         } catch (XmlPullParserException e) {
@@ -130,15 +146,10 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
         return false;
 
     }
-/*
-    private void FillArray(){
-        int l = earthquakes.size();
-        for(int i = 0; i < l; i++){
-            Earthquake ele = earthquakes.get(i);
-         //   headlines.add(ele.getDate());
-            headlines.add(ele.getLocation());
-          //  headlines.add(ele.getUrl());
-           // headlines.add("next kolo");
-        }
-    }*/
+
+    private void openActivity(ArrayList<Earthquake> earthquakes) {
+        Intent intent = new Intent(c, SearchingActivity.class);
+        intent.putExtra("quake", earthquakes);
+        c.startActivity(intent);
+    }
 }
