@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,15 +30,19 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
     ArrayList<Earthquake> earthquakes = new ArrayList<>();
     Earthquake quake = new Earthquake();
     ArrayAdapter arrayAdapter;
+    Handler handler;
+    Runnable runnable;
 
     ArrayList<String> headlines = new ArrayList<>();
 
     ProgressDialog pd;
 
-    public ListCreator(Context c, ArrayList<Earthquake> earthquakes, ListView lv) {
+    public ListCreator(Context c, ArrayList<Earthquake> earthquakes, ListView lv, Handler handler, Runnable runnable) {
         this.c = c;
         this.earthquakes = earthquakes;
         this.lv = lv;
+        this.handler = handler;
+        this.runnable = runnable;
     }
 
     @Override
@@ -102,6 +107,7 @@ public class ListCreator extends AsyncTask<Void, Void, Boolean> {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                    handler.removeCallbacks(runnable);
                     quake = earthquakes.get(i);
                     Toast.makeText(c, quake.getLocation(), Toast.LENGTH_SHORT).show();
                     openActivity2(quake);

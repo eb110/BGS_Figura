@@ -3,6 +3,7 @@ package com.example.bgs_figura.connector_RSS;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,14 +22,19 @@ public class Downloader extends AsyncTask<Void, Void, Object> {
     ListView lv;
     FragmentManager manager;
     Button btn;
+    Handler handler;
+    Runnable runnable;
 
     ProgressDialog pd;
 
-    public Downloader(FragmentManager manager, Context c, ListView lv, Button btn) {
+    public Downloader(FragmentManager manager, Context c, ListView lv, Button btn, Handler handler,
+                      Runnable runnable) {
         this.c = c;
         this.lv = lv;
         this.manager = manager;
         this.btn = btn;
+        this.handler = handler;
+        this.runnable = runnable;
     }
 
     @Override
@@ -54,7 +60,7 @@ public class Downloader extends AsyncTask<Void, Void, Object> {
             Toast.makeText(c, data.toString(), Toast.LENGTH_SHORT).show();
         }else{
             //
-            new RSSParser(manager, c, (InputStream) data, lv, btn).execute();
+            new RSSParser(manager, c, (InputStream) data, lv, btn, handler, runnable).execute();
         }
     }
 

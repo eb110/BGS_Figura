@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -31,18 +32,23 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
     ListView lv;
     Button btn;
     FragmentManager manager;
+    Handler handler;
+    Runnable runnable;
 
     ProgressDialog pd;
     // ArrayList<String> headlines = new ArrayList<>();
 
     ArrayList<Earthquake> earthquakes = new ArrayList<>();
 
-    public RSSParser(FragmentManager manager, Context c, InputStream is, ListView lv, Button btn) {
+    public RSSParser(FragmentManager manager, Context c, InputStream is, ListView lv, Button btn,
+                     Handler handler, Runnable runnable) {
         this.c = c;
         this.is = is;
         this.lv = lv;
         this.manager = manager;
         this.btn = btn;
+        this.handler = handler;
+        this.runnable = runnable;
     }
 
     @Override
@@ -68,13 +74,13 @@ public class RSSParser extends AsyncTask<Void, Void, Boolean> {
             MapCreator mc = new MapCreator(manager, earthquakes);
             mc.execute();
             //bind
-            new ListCreator(c, earthquakes, lv).execute();
+            new ListCreator(c, earthquakes, lv, handler, runnable).execute();
 
             btn.setVisibility(View.VISIBLE);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    handler.removeCallbacks(runnable);
                     openActivity(earthquakes);
 
                 }
