@@ -60,7 +60,7 @@ public class MapsFragment extends Fragment {
                             .title(quake.getLocation())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
                 }
-                else {
+                else if(quake.getMagnitude() < 1.0){
                     mMap.addMarker(new MarkerOptions()
                             .position(landMark)
                             .title(quake.getLocation())

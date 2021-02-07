@@ -23,7 +23,7 @@ public class MapCreator {
 
         MapsFragment mf = new MapsFragment(earthquakes, 6);
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_maps2, mf);
+        transaction.replace(R.id.fragment_maps, mf);
         transaction.commit();
 
 

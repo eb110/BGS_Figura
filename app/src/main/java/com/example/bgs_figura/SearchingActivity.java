@@ -106,7 +106,6 @@ public class SearchingActivity extends AppCompatActivity implements View.OnClick
             String date_S = earthquakes.get(i).getDate();
             date_S = date_S.substring(date_S.indexOf(' ') + 1, date_S.lastIndexOf(' '));
             Date temp = new Date(date_S);
-            System.out.println(temp);
             if(temp.before(df) || temp.after(dt))continue;
             result.add(earthquakes.get(i));
         }
@@ -117,13 +116,13 @@ public class SearchingActivity extends AppCompatActivity implements View.OnClick
     private void updateResult(){
         ArrayList<Earthquake> earthquakes1 = updateQuakes();
         if(earthquakes1 == null || earthquakes1.size() == 0)return;
-        double wst = Double.MAX_VALUE;
+        double wst = 1000;
         String west_S = "";
-        double est = Double.MIN_VALUE;
+        double est = -1000;
         String east_S = "";
-        double nth = 0;
+        double nth = -1000;
         String north_S = "";
-        double sth = Double.MAX_VALUE;
+        double sth = 1000;
         String south_S = "";
         double mgnt = 0;
         int dpth = 0;
@@ -173,7 +172,5 @@ public class SearchingActivity extends AppCompatActivity implements View.OnClick
             dt = myCalendar.getTime();
         }
     }
-
-
 
 }

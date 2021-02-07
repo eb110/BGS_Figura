@@ -24,7 +24,7 @@
             android:text="Searching facility" />
 
         <FrameLayout
-            android:id="@+id/fragment_maps2"
+            android:id="@+id/fragment_maps"
             android:layout_width="match_parent"
             android:layout_height="300dp" />
 
