@@ -34,14 +34,8 @@ public class MainActivity extends AppCompatActivity {
         startRepeating();
     }
 
-
-
-
-
         public void startRepeating() {
             handler.postDelayed(appRunnable, 1000);
-
-
         }
 
         private Runnable appRunnable = new Runnable() {
@@ -51,19 +45,5 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(this, 5000);
             }
         };
-
-        /*
-           final int delay = 10000; // 1000 milliseconds == 1 second
-
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                new Downloader(manager,MainActivity.this, lv, btn).execute();
-                handler.postDelayed(this, delay);
-            }
-        }, delay);
-        */
-
-
-
 
 }
