@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
         startRepeating();
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        handler.removeCallbacks(appRunnable);
+    }
+
         public void startRepeating() {
             handler.postDelayed(appRunnable, 1000);
         }
@@ -41,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         private Runnable appRunnable = new Runnable() {
             @Override
             public void run() {
-                new Downloader(manager,MainActivity.this, lv, btn, handler, appRunnable).execute();
-                handler.postDelayed(this, 5000);
+                new Downloader(manager,MainActivity.this, lv, btn).execute();
+                handler.postDelayed(this, 10000);
             }
         };
 
