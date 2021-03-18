@@ -1,3 +1,9 @@
+/*
+    Wladyslaw Figura
+    Glasgow Caledonian University
+    Mobile Technology 2021
+    S1920048
+ */
 package com.example.bgs_figura.fragmets_manipulation;
 
 import androidx.fragment.app.FragmentManager;

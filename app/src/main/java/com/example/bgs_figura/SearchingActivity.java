@@ -1,3 +1,9 @@
+/*
+    Wladyslaw Figura
+    Glasgow Caledonian University
+    Mobile Technology 2021
+    S1920048
+ */
 package com.example.bgs_figura;
 
 import android.app.DatePickerDialog;
@@ -49,11 +55,11 @@ public class SearchingActivity extends AppCompatActivity implements View.OnClick
 
         north = (TextView) findViewById(R.id.north);
         south = (TextView) findViewById(R.id.south);
+        shallow = (TextView) findViewById(R.id.shallow);
         east = (TextView) findViewById(R.id.east);
         west = (TextView) findViewById(R.id.west);
         magnitude = (TextView) findViewById(R.id.magnitude);
         deep = (TextView) findViewById(R.id.deep);
-        shallow = (TextView) findViewById(R.id.shallow);
 
         searchBtn = (Button) findViewById(R.id.search_btn);
 
@@ -126,7 +132,7 @@ public class SearchingActivity extends AppCompatActivity implements View.OnClick
         String south_S = "";
         double mgnt = 0;
         int dpth = 0;
-        int shlw = Integer.MAX_VALUE;
+        int shlw = 1000000;
         int l = earthquakes1.size();
         for(int i = 0; i < l; i++){
             Earthquake quake = earthquakes1.get(i);
@@ -150,6 +156,7 @@ public class SearchingActivity extends AppCompatActivity implements View.OnClick
                 south_S = quake.getLocation();
             }
         }
+        System.out.println("dupa:   " + shlw + "  :dupa");
         magnitude.setText("Maximum magnitude: " + mgnt);
         deep.setText("Maximum depth: " + dpth + "km");
         shallow.setText("Minimum depth: " + shlw + "km");

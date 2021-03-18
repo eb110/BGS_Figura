@@ -1,3 +1,9 @@
+/*
+    Wladyslaw Figura
+    Glasgow Caledonian University
+    Mobile Technology 2021
+    S1920048
+ */
 package com.example.bgs_figura;
 
 import android.os.Bundle;
@@ -41,26 +47,27 @@ public class MapsFragment extends Fragment {
                 Earthquake quake = earthquakes.get(i);
 
                 landMark = new LatLng(quake.getLatitude(), quake.getLongitude());
+                double check = quake.getMagnitude();
 
-                if(quake.getMagnitude() >= 3.0) {
+                if(check >= 3.0) {
                     mMap.addMarker(new MarkerOptions()
                             .position(landMark)
                             .title(quake.getLocation())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                 }
-                else if(quake.getMagnitude() >= 2.0) {
+                else if(check >= 2.0) {
                     mMap.addMarker(new MarkerOptions()
                             .position(landMark)
                             .title(quake.getLocation())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
                 }
-                else if(quake.getMagnitude() >= 1.0) {
+                else if(check >= 1.0) {
                     mMap.addMarker(new MarkerOptions()
                             .position(landMark)
                             .title(quake.getLocation())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
                 }
-                else if(quake.getMagnitude() < 1.0){
+                else {
                     mMap.addMarker(new MarkerOptions()
                             .position(landMark)
                             .title(quake.getLocation())

@@ -1,9 +1,14 @@
+/*
+    Wladyslaw Figura
+    Glasgow Caledonian University
+    Mobile Technology 2021
+    S1920048
+ */
 package com.example.bgs_figura.connector_RSS;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--  Wladyslaw Figura
+    Glasgow Caledonian University
+    Mobile Technology 2021
+    S1920048-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -48,7 +52,7 @@
         android:gravity="center"
         android:layout_marginTop="5dp"
         android:textSize="25sp"
-        android:text="North"
+        android:text="-"
         />
 
     <TextView
@@ -59,7 +63,7 @@
         android:gravity="center"
         android:textSize="25sp"
         android:layout_marginTop="5dp"
-        android:text="North"
+        android:text="-"
         />
 
     <TextView
@@ -70,7 +74,7 @@
         android:gravity="center"
         android:textSize="25sp"
         android:layout_marginTop="5dp"
-        android:text="North"
+        android:text="-"
         />
 
     <TextView
@@ -81,7 +85,7 @@
         android:gravity="center"
         android:textSize="25sp"
         android:layout_marginTop="5dp"
-        android:text="North"
+        android:text="-"
         />
 
     <TextView
@@ -92,7 +96,7 @@
         android:gravity="center"
         android:textSize="25sp"
         android:layout_marginTop="5dp"
-        android:text="North"
+        android:text="-"
         />
 
     <TextView
@@ -103,7 +107,7 @@
         android:gravity="center"
         android:textSize="25sp"
         android:layout_marginTop="5dp"
-        android:text="North"
+        android:text="-"
         />
 
     <TextView
@@ -114,7 +118,7 @@
         android:gravity="center"
         android:textSize="25sp"
         android:layout_marginTop="5dp"
-        android:text="North"
+        android:text="-"
         />
 
 </LinearLayout>
