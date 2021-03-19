@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 new Downloader(manager,MainActivity.this, lv, btn).execute();
-                handler.postDelayed(this, 10000);
+                handler.postDelayed(this, 30000);
             }
         };
 
